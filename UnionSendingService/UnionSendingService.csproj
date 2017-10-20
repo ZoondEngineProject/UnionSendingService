@@ -56,9 +56,6 @@
     <Compile Include="Library\ZELab\Dispatcher\Folders.cs" />
     <Compile Include="Library\ZELab\Dispatcher\SerializeFileInfo.cs" />
     <Compile Include="Library\ZELab\Journal\Manager.cs" />
-    <Compile Include="Library\ZELab\Journal\Receive.cs" />
-    <Compile Include="Library\ZELab\Journal\Send.cs" />
-    <Compile Include="Library\ZELab\Journal\Writer.cs" />
     <Compile Include="Library\ZELab\Network\ConnTypes.cs" />
     <Compile Include="Library\ZELab\Network\Manager.cs" />
     <Compile Include="Library\ZELab\Network\Receive.cs" />

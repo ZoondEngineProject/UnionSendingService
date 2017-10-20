@@ -2,21 +2,68 @@
 {
     class Manager
     {
-        private Send Sender;
-        private Receive Receiver;
+        private Form1 Form;
 
-        public Send Send()
+        private int Journalable, JournalableType;
+        private string JournalableText;
+
+        public Manager()
         {
-            this.Sender = new Send();
-
-            return this.Sender;
+            this.Form = new Form1();
         }
 
-        public Receive Receive()
+        public Manager Send()
         {
-            this.Receiver = new Receive();
+            this.Journalable = 0;
 
-            return this.Receiver;
+            return this;
+        }
+
+        public Manager Receive()
+        {
+            this.Journalable = 1;
+
+            return this;
+        }
+
+        public Manager Write(string text)
+        {
+            this.JournalableText = text;
+
+            return this;
+        }
+
+        public void Error()
+        {
+            this.JournalableType = 0;
+
+            this.Journaling();
+        }
+
+        public void Warning()
+        {
+            this.JournalableType = 1;
+
+            this.Journaling();
+        }
+
+        public void Information()
+        {
+            this.JournalableType = 2;
+
+            this.Journaling();
+        }
+
+        public void Success()
+        {
+            this.JournalableType = 3;
+
+            this.Journaling();
+        }
+
+        private void Journaling()
+        {
+            this.Form.JournalingInformation(this.Journalable, this.JournalableText, this.JournalableType);
         }
     }
 }
