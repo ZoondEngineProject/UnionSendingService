@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows.Forms;
 
 namespace UnionSendingService.Library.ZELab.Network
 {
@@ -16,6 +17,11 @@ namespace UnionSendingService.Library.ZELab.Network
         private Receive Receiver;
 
         protected Form1 Form;
+
+        protected Byte[] StreamBytes;
+        protected MemoryStream MStream;
+        protected Dispatcher.SerializeFileInfo SerializeInfo;
+        protected FileStream SavingFileStream;
 
         public Manager()
         {
@@ -57,7 +63,7 @@ namespace UnionSendingService.Library.ZELab.Network
             }
             catch(Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -74,7 +80,7 @@ namespace UnionSendingService.Library.ZELab.Network
             }
             catch(Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
 

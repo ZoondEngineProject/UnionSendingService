@@ -12,14 +12,9 @@ namespace UnionSendingService.Library.ZELab.Network
 {
     class Receive : Manager
     {
-        private Byte[] StreamBytes;
-        private MemoryStream MStream;
-        private Dispatcher.SerializeFileInfo SerializeInfo;
-        private FileStream SavingFileStream;
-
         public Receive()
         {
-            this.MStream = new MemoryStream();
+            base.MStream = new MemoryStream();
         }
 
         public void Start()
@@ -33,14 +28,14 @@ namespace UnionSendingService.Library.ZELab.Network
         {
             try
             {
-                this.StreamBytes = base.Udp.Receive(ref base.EndPoint);
+                base.StreamBytes = base.Udp.Receive(ref base.EndPoint);
 
                 XmlSerializer Serializer = new XmlSerializer(typeof(Dispatcher.SerializeFileInfo));
 
-                this.MStream.Write(this.StreamBytes, 0, this.StreamBytes.Length);
-                this.MStream.Position = 0;
+                base.MStream.Write(this.StreamBytes, 0, this.StreamBytes.Length);
+                base.MStream.Position = 0;
 
-                this.SerializeInfo = (Dispatcher.SerializeFileInfo)Serializer.Deserialize(this.MStream);
+                base.SerializeInfo = (Dispatcher.SerializeFileInfo)Serializer.Deserialize(base.MStream);
             }
             catch(Exception ex)
             {
@@ -52,11 +47,11 @@ namespace UnionSendingService.Library.ZELab.Network
         {
             try
             {
-                this.StreamBytes = base.Udp.Receive(ref base.EndPoint);
+                base.StreamBytes = base.Udp.Receive(ref base.EndPoint);
                 ApplicationServiceProvider.Folders.Boot(1, Dispatcher.SerializeFileInfo.FileName, "C:\\USS\\Downloads\\");
-                this.SavingFileStream = ApplicationServiceProvider.Folders.GetFileStream();
+                base.SavingFileStream = ApplicationServiceProvider.Folders.GetFileStream();
 
-                this.SavingFileStream.Write(this.StreamBytes, 0, this.StreamBytes.Length);
+                base.SavingFileStream.Write(this.StreamBytes, 0, this.StreamBytes.Length);
             }
             catch(Exception ex)
             {
@@ -64,7 +59,7 @@ namespace UnionSendingService.Library.ZELab.Network
             }
             finally
             {
-                this.SavingFileStream.Close();
+                base.SavingFileStream.Close();
                 base.Udp.Close();
             }
         }

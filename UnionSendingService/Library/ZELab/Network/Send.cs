@@ -7,14 +7,20 @@ namespace UnionSendingService.Library.ZELab.Network
 {
     class Send : Manager
     {
-        private MemoryStream MStream;
-        private FileStream FStream;
-        private Byte[] StreamBytes;
+        private MemoryStream mStream = new MemoryStream();
+        private FileStream fStream;
+        private Byte[] streamBytes;
+
+        public Send()
+        {
+            this.mStream = new MemoryStream();
+        }
 
         public void Start()
         {
-            this.MStream = new MemoryStream();
-            this.FStream = ApplicationServiceProvider.Folders.GetFileStream();
+            mStream = new MemoryStream();
+            
+            fStream = ApplicationServiceProvider.Folders.GetFileStream();
 
             this.SendFileInfo();
 
@@ -27,32 +33,32 @@ namespace UnionSendingService.Library.ZELab.Network
         {
             XmlSerializer Serializer = new XmlSerializer(typeof(Dispatcher.SerializeFileInfo));
 
-            Serializer.Serialize(this.MStream, new Dispatcher.SerializeFileInfo());
+            Serializer.Serialize(this.mStream, new Dispatcher.SerializeFileInfo());
 
-            this.MStream.Position = 0;
-            this.StreamBytes = new Byte[this.MStream.Length];
+            this.mStream.Position = 0;
+            this.streamBytes = new Byte[this.mStream.Length];
 
-            this.MStream.Read(this.StreamBytes, 0, Convert.ToInt32(this.MStream.Length));
+            this.mStream.Read(this.streamBytes, 0, Convert.ToInt32(this.mStream.Length));
 
             Console.WriteLine("Отправка деталей файла...");
 
             // Отправляем информацию о файле
-            base.Udp.Send(this.StreamBytes, this.StreamBytes.Length, base.EndPoint);
-            this.MStream.Close();
+            base.Udp.Send(this.streamBytes, this.streamBytes.Length, base.EndPoint);
+            this.mStream.Close();
 
         }
 
         private void SendFile()
         {
-            this.StreamBytes = new Byte[this.FStream.Length];
-            this.FStream.Read(this.StreamBytes, 0, this.StreamBytes.Length);
+            this.streamBytes = new Byte[this.fStream.Length];
+            this.fStream.Read(this.streamBytes, 0, this.streamBytes.Length);
 
             //Сводка...
 
             try
             {
                 // Отправляем файл
-                base.Udp.Send(this.StreamBytes, this.StreamBytes.Length, base.EndPoint);
+                base.Udp.Send(this.streamBytes, this.streamBytes.Length, base.EndPoint);
             }
             catch (Exception ex)
             {
@@ -61,7 +67,7 @@ namespace UnionSendingService.Library.ZELab.Network
             finally
             {
                 // Закрываем соединение и очищаем поток
-                this.FStream.Close();
+                this.fStream.Close();
                 base.Udp.Close();
             }
 

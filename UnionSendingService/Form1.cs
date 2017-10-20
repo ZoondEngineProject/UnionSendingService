@@ -98,7 +98,7 @@ namespace UnionSendingService
 
                 this.NetworkSendThread = new Thread(() =>
                 {
-                    ApplicationServiceProvider.Network.Boot(Library.ZELab.Network.ConnTypes.SEND, SendingIPAddrBox.ToString());
+                    ApplicationServiceProvider.Network.Boot(Library.ZELab.Network.ConnTypes.SEND, SendingIPAddrBox.Text.ToString());
                 });
 
                 this.NetworkSendThread.Start();
