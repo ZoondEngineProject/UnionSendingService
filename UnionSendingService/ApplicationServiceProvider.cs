@@ -18,8 +18,18 @@
         public static Library.ZELab.Antivirus.Manager Antivirus = new Library.ZELab.Antivirus.Manager();
 
         /// <summary>
-        /// Предоставляет объект Network для работы с сетью.
+        /// Предоставляет объект Net.ReceivingRef для работы с сетью.
         /// </summary>
-        public static Library.ZELab.Network.Manager Network = new Library.ZELab.Network.Manager();
+        public static Library.ZELab.Net.ReceivingRef Receive = new Library.ZELab.Net.ReceivingRef();
+
+        /// <summary>
+        /// Предоставляет объект Net.SendingRef для работы с сетью.
+        /// </summary>
+        public static Library.ZELab.Net.SendingRef Sending = new Library.ZELab.Net.SendingRef();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Library.ZELab.Dispatcher.Creator Creator = new Library.ZELab.Dispatcher.Creator();
     }
 }

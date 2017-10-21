@@ -8,6 +8,7 @@ namespace UnionSendingService.Library.ZELab.Dispatcher
         private string FileName, FilePath;
         private int FileSize;
         private FileStream FSObject;
+        private SerializeFileInfo SInfo;
 
         public Folders()
         {
@@ -29,7 +30,7 @@ namespace UnionSendingService.Library.ZELab.Dispatcher
             }
             else if(type == 1)
             {
-                this.FSObject = new FileStream(fp + "temp.USS." + fn, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+                this.FSObject = new FileStream(this.FilePath + this.FileName, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
             }
             else
             {
@@ -38,6 +39,11 @@ namespace UnionSendingService.Library.ZELab.Dispatcher
             }
 
             this.FileSize = Convert.ToInt32((int)this.FSObject.Length) / 1024 / 1024; //Convert To MB
+
+            SInfo = new SerializeFileInfo();
+
+            SInfo.FileName = this.FileName;
+            SInfo.FileSize = this.GetFileSize();
         }
 
         public string GetFileName()

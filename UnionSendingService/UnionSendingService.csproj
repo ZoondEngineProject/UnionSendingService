@@ -52,18 +52,28 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Library\ZELab\Antivirus\Manager.cs" />
+    <Compile Include="Library\ZELab\Dispatcher\Creator.cs" />
     <Compile Include="Library\ZELab\Dispatcher\Folders.cs" />
     <Compile Include="Library\ZELab\Dispatcher\SerializeFileInfo.cs" />
     <Compile Include="Library\ZELab\Journal\Manager.cs" />
-    <Compile Include="Library\ZELab\Network\ConnTypes.cs" />
-    <Compile Include="Library\ZELab\Network\Manager.cs" />
-    <Compile Include="Library\ZELab\Network\Receive.cs" />
-    <Compile Include="Library\ZELab\Network\Send.cs" />
+    <Compile Include="Library\ZELab\Net\ReceivingRef.cs" />
+    <Compile Include="Library\ZELab\Net\SendingRef.cs" />
+    <Compile Include="Library\ZELab\TcpNet\Receive.cs" />
+    <Compile Include="Library\ZELab\TcpNet\Send.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -117,6 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

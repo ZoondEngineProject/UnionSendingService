@@ -13,7 +13,7 @@ namespace UnionSendingService
 {
     public partial class Form1 : Form
     {
-        private Thread NetworkSendThread;
+        private Thread NetworkSendThread = null;
         private Thread NetworkReceiveThread;
 
         public Form1()
@@ -39,6 +39,10 @@ namespace UnionSendingService
 
             this.JournalingInformation(0, "USS: Приложение инициализировано", 3);
             this.JournalingInformation(1, "USS: Приложение инициализировано", 3);
+
+            //Threads initializing
+            this.InitThreads();
+
         }
 
         private void AcceptStatusInformation()
@@ -77,6 +81,17 @@ namespace UnionSendingService
              * RECEIVING LABELS INITITALIZED
              * !
              */
+            ValueReceiveConnectionStatusLabel.ForeColor = Color.Red;
+            ValueReceiveConnectionStatusLabel.Text = "Не активно";
+
+            ValueReceiveSizeFileLabel.ForeColor = Color.Red;
+            ValueReceiveSizeFileLabel.Text = "0 МБ";
+
+            ValueReceiveStatusLabel.ForeColor = Color.Red;
+            ValueReceiveStatusLabel.Text = "0 МБ";
+
+            ValueReceiveResultLabel.ForeColor = Color.Red;
+            ValueReceiveResultLabel.Text = "Ожидает получения";
 
 
             /* !
@@ -96,11 +111,7 @@ namespace UnionSendingService
             {
                 SendingAbortBtn.Visible = true;
 
-                this.NetworkSendThread = new Thread(() =>
-                {
-                    ApplicationServiceProvider.Network.Boot(Library.ZELab.Network.ConnTypes.SEND, SendingIPAddrBox.Text.ToString());
-                });
-
+                this.InitThreads(SendingIPAddrBox.Text);
                 this.NetworkSendThread.Start();
             }
             else
@@ -161,10 +172,13 @@ namespace UnionSendingService
 
                     //Enable Accept Button
                     SendAcceptBtn.Enabled = true;
+
+                    //Debug 
+                    //MessageBox.Show(ApplicationServiceProvider.Folders.GetFileStream().ToString());
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Нет доступа к директории. Запустите программу от имени Администратора. \n" + ex.Message);
+                    MessageBox.Show(ex.StackTrace + "\n" + ex.Message);
                 }
             }
         }
@@ -282,12 +296,46 @@ namespace UnionSendingService
             EnableConnBtn.Enabled = false;
             DisableConnBtn.Enabled = true;
 
-            this.NetworkReceiveThread = new Thread(() =>
+            if(this.NetworkReceiveThread != null)
             {
-                ApplicationServiceProvider.Network.Boot(Library.ZELab.Network.ConnTypes.RECEIVE);
-            });
+                this.InitThreads();
+            }
 
             this.NetworkReceiveThread.Start();
+            this.WaitOrConnect(0);
+        }
+
+        public void WaitOrConnect(int connected)
+        {
+            if (connected == 0)
+            {
+                ValueReceiveConnectionStatusLabel.ForeColor = Color.Purple;
+                ValueReceiveConnectionStatusLabel.Text = "Ожидается...";
+            }
+            else if(connected == 1)
+            {
+                ValueReceiveConnectionStatusLabel.ForeColor = Color.Green;
+                ValueReceiveConnectionStatusLabel.Text = "Подключено";
+            }
+            else
+            {
+                ValueReceiveConnectionStatusLabel.ForeColor = Color.Red;
+                ValueReceiveConnectionStatusLabel.Text = "Не активно";
+            }
+
+        }
+
+        private void InitThreads(string ip = null)
+        {
+            this.NetworkReceiveThread = new Thread(() =>
+            {
+                ApplicationServiceProvider.Receive.Receive();
+            });
+
+            this.NetworkSendThread = new Thread(() =>
+            {
+                ApplicationServiceProvider.Sending.Send(ip);
+            });
         }
 
         private void DisableConnBtn_Click(object sender, EventArgs e)
@@ -299,18 +347,60 @@ namespace UnionSendingService
             EnableConnBtn.Enabled = true;
             DisableConnBtn.Enabled = false;
 
-            ApplicationServiceProvider.Network.Abort();
+            //Abort
+            ApplicationServiceProvider.Receive.Abort();
             this.NetworkReceiveThread.Abort();
+
+            this.WaitOrConnect(2);
+
         }
 
         private void SendingAbortBtn_Click(object sender, EventArgs e)
+        {
+            this.AbortSendingConnection();
+        }
+
+        private void AbortSendingConnection()
         {
             this.BootLoaders(false);
 
             SendSwitchBtn.Enabled = true;
 
-            ApplicationServiceProvider.Network.Abort();
+            //Abort
             this.NetworkSendThread.Abort();
+            SendingAbortBtn.Visible = false;
+            SendingIPAddrBox.Enabled = true;
+            SendAcceptBtn.Enabled = true;
+        }
+
+        private void Form1_Closing(object sender, CancelEventArgs e)
+        {
+            if(this.NetworkReceiveThread.ThreadState == ThreadState.Running)
+            {
+                this.BootLoaders(false);
+
+                SendSwitchBtn.Enabled = true;
+
+                EnableConnBtn.Enabled = true;
+                DisableConnBtn.Enabled = false;
+
+                //Abort
+                ApplicationServiceProvider.Receive.Abort();
+                this.NetworkReceiveThread.Abort();
+
+                this.WaitOrConnect(2);
+            }
+
+            if(this.NetworkSendThread.ThreadState == ThreadState.Running)
+            {
+                this.AbortSendingConnection();
+            }
+        }
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 about_form = new Form2();
+            about_form.Show();
         }
     }
 }

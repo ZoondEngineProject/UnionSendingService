@@ -337,9 +337,9 @@
             this.groupBox2.Controls.Add(this.TextReceiveSizeFileLabel);
             this.groupBox2.Controls.Add(this.ValueReceiveConnectionStatusLabel);
             this.groupBox2.Controls.Add(this.TextReceiveConnectionStatusLabel);
-            this.groupBox2.Location = new System.Drawing.Point(400, 7);
+            this.groupBox2.Location = new System.Drawing.Point(337, 7);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(172, 247);
+            this.groupBox2.Size = new System.Drawing.Size(235, 247);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Состояние:";
@@ -347,7 +347,7 @@
             // ValueReceiveResultLabel
             // 
             this.ValueReceiveResultLabel.AutoSize = true;
-            this.ValueReceiveResultLabel.Location = new System.Drawing.Point(79, 208);
+            this.ValueReceiveResultLabel.Location = new System.Drawing.Point(67, 208);
             this.ValueReceiveResultLabel.Name = "ValueReceiveResultLabel";
             this.ValueReceiveResultLabel.Size = new System.Drawing.Size(23, 13);
             this.ValueReceiveResultLabel.TabIndex = 7;
@@ -429,7 +429,7 @@
             // 
             this.ReceiveTextBox.Location = new System.Drawing.Point(6, 27);
             this.ReceiveTextBox.Name = "ReceiveTextBox";
-            this.ReceiveTextBox.Size = new System.Drawing.Size(385, 227);
+            this.ReceiveTextBox.Size = new System.Drawing.Size(325, 227);
             this.ReceiveTextBox.TabIndex = 6;
             this.ReceiveTextBox.Text = "";
             // 
@@ -463,7 +463,7 @@
             // 
             this.SendingAbortBtn.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SendingAbortBtn.Image = global::UnionSendingService.Properties.Resources.cancel;
-            this.SendingAbortBtn.Location = new System.Drawing.Point(233, 11);
+            this.SendingAbortBtn.Location = new System.Drawing.Point(233, 264);
             this.SendingAbortBtn.Name = "SendingAbortBtn";
             this.SendingAbortBtn.Size = new System.Drawing.Size(19, 22);
             this.SendingAbortBtn.TabIndex = 11;
@@ -483,7 +483,7 @@
             // ReceivePreloader
             // 
             this.ReceivePreloader.Image = global::UnionSendingService.Properties.Resources.preloader;
-            this.ReceivePreloader.Location = new System.Drawing.Point(52, 117);
+            this.ReceivePreloader.Location = new System.Drawing.Point(93, 119);
             this.ReceivePreloader.Name = "ReceivePreloader";
             this.ReceivePreloader.Size = new System.Drawing.Size(72, 72);
             this.ReceivePreloader.TabIndex = 11;
@@ -569,6 +569,7 @@
             this.оПрограммеToolStripMenuItem.Name = "оПрограммеToolStripMenuItem";
             this.оПрограммеToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
             this.оПрограммеToolStripMenuItem.Text = "О программе";
+            this.оПрограммеToolStripMenuItem.Click += new System.EventHandler(this.оПрограммеToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -634,13 +635,9 @@
         private System.Windows.Forms.Label ValueConnectionStatusLabel;
         private System.Windows.Forms.Label TextConnectionStatusLabel;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label ValueReceiveResultLabel;
         private System.Windows.Forms.Label TextReceiveResultLabel;
-        private System.Windows.Forms.Label ValueReceiveStatusLabel;
         private System.Windows.Forms.Label TextReceiveStatusLabel;
-        private System.Windows.Forms.Label ValueReceiveSizeFileLabel;
         private System.Windows.Forms.Label TextReceiveSizeFileLabel;
-        private System.Windows.Forms.Label ValueReceiveConnectionStatusLabel;
         private System.Windows.Forms.Label TextReceiveConnectionStatusLabel;
         private System.Windows.Forms.Label ReceiveJournalLabel;
         private System.Windows.Forms.RichTextBox ReceiveTextBox;
@@ -652,6 +649,10 @@
         private System.Windows.Forms.PictureBox SendPreloader;
         private System.Windows.Forms.PictureBox ReceivePreloader;
         private System.Windows.Forms.PictureBox SendingAbortBtn;
+        public System.Windows.Forms.Label ValueReceiveResultLabel;
+        public System.Windows.Forms.Label ValueReceiveStatusLabel;
+        public System.Windows.Forms.Label ValueReceiveSizeFileLabel;
+        public System.Windows.Forms.Label ValueReceiveConnectionStatusLabel;
     }
 }
 
