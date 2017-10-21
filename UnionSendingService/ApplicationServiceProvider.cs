@@ -20,12 +20,14 @@
         /// <summary>
         /// Предоставляет объект Net.ReceivingRef для работы с сетью.
         /// </summary>
-        public static Library.ZELab.Net.ReceivingRef Receive = new Library.ZELab.Net.ReceivingRef();
+        //public static Library.ZELab.Net.ReceivingRef Receive = new Library.ZELab.Net.ReceivingRef();
+        public static Library.ZELab.TcpNet.Receive Receive = new Library.ZELab.TcpNet.Receive();
 
         /// <summary>
         /// Предоставляет объект Net.SendingRef для работы с сетью.
         /// </summary>
-        public static Library.ZELab.Net.SendingRef Sending = new Library.ZELab.Net.SendingRef();
+        //public static Library.ZELab.Net.SendingRef Sending = new Library.ZELab.Net.SendingRef();
+        public static Library.ZELab.TcpNet.Send Sending = new Library.ZELab.TcpNet.Send();
 
         /// <summary>
         /// 
